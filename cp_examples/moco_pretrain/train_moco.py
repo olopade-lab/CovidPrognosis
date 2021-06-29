@@ -7,6 +7,8 @@ LICENSE file in the root directory of this source tree.
 import os
 from argparse import ArgumentParser
 from pathlib import Path
+import sys
+sys.path.append("/gpfs/data/huo-lab/Image/rachnagupta/CovidPrognosis/covidprognosis")
 
 import pytorch_lightning as pl
 import yaml
@@ -21,8 +23,8 @@ from covidprognosis.plmodules import XrayDataModule
 from torchvision import transforms
 
 from moco_module import MoCoModule
-
-
+import torch
+torch.cuda.empty_cache()
 def build_args(arg_defaults=None):
     pl.seed_everything(1234)
     data_config = Path.cwd() / "../../configs/data.yaml"

@@ -66,17 +66,17 @@ class CheXpertDataset(BaseDataset):
         ]
 
         if self.split == "train":
-            self.csv_path = self.directory / "CheXpert-v1.0" / "train.csv"
+            self.csv_path = self.directory / "CheXpert-v1.0-small" / "train.csv"
             self.csv = pd.read_csv(self.directory / self.csv_path)
         elif self.split == "val":
-            self.csv_path = self.directory / "CheXpert-v1.0" / "valid.csv"
+            self.csv_path = self.directory / "CheXpert-v1.0-small" / "valid.csv"
             self.csv = pd.read_csv(self.directory / self.csv_path)
         elif self.split == "all":
             self.csv_path = self.directory / "train.csv"
             self.csv = pd.concat(
                 [
-                    pd.read_csv(self.directory / "CheXpert-v1.0" / "train.csv"),
-                    pd.read_csv(self.directory / "CheXpert-v1.0" / "valid.csv"),
+                    pd.read_csv(self.directory / "CheXpert-v1.0-small" / "train.csv"),
+                    pd.read_csv(self.directory / "CheXpert-v1.0-small" / "valid.csv"),
                 ]
             )
         else:

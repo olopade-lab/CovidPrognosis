@@ -1,4 +1,4 @@
 paths:
   nih: "none"
-  chexpert: "none"
+  chexpert: "/gpfs/data/huo-lab/Image/rachnagupta/CovidPrognosis/CheXpert"
   mimic: "none"
