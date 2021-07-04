@@ -71,6 +71,9 @@ class CheXpertDataset(BaseDataset):
         elif self.split == "val":
             self.csv_path = self.directory / "CheXpert-v1.0-small" / "valid.csv"
             self.csv = pd.read_csv(self.directory / self.csv_path)
+        elif self.split == "test":
+            self.csv_path = self.directory / "CheXpert-v1.0-small" / "train.csv"
+            self.csv = pd.read_csv(self.directory / self.csv_path)
         elif self.split == "all":
             self.csv_path = self.directory / "train.csv"
             self.csv = pd.concat(
