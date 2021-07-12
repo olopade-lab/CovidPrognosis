@@ -43,6 +43,7 @@ class CheXpertDataset(BaseDataset):
         self,
         directory: Union[str, os.PathLike],
         split: str = "train",
+        percent_data: float = 1,
         label_list: Union[str, List[str]] = "all",
         subselect: Optional[str] = None,
         transform: Optional[Callable] = None,
@@ -87,7 +88,8 @@ class CheXpertDataset(BaseDataset):
                 "split {} not recognized for dataset {}, "
                 "not returning samples".format(split, self.__class__.__name__)
             )
-
+        downsized_num = (int)(len(self.csv.index)*percent_data)
+        self.csv = self.csv.head(downsized_num)
         self.csv = self.preproc_csv(self.csv, self.subselect)
 
     @staticmethod

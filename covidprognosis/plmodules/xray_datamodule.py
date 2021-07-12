@@ -49,6 +49,7 @@ def fetch_dataset(
     dataset_name: str,
     dataset_dir: Union[List[Union[str, os.PathLike]], Union[str, os.PathLike]],
     split: str,
+    percent_data: float,
     transform: Optional[Callable],
     two_image: bool = False,
     label_list="all",
@@ -81,6 +82,7 @@ def fetch_dataset(
         dataset = cp.data.CheXpertDataset(
             directory=dataset_dir,
             split=split,
+            percent_data = percent_data,
             transform=transform,
             label_list=label_list,
         )
@@ -133,6 +135,7 @@ class XrayDataModule(pl.LightningDataModule):
         dataset_dir: Union[List[Union[str, os.PathLike]], Union[str, os.PathLike]],
         label_list: Union[str, List[str]] = "all",
         batch_size: int = 1,
+        percent_data: float = 1,
         num_workers: int = 4,
         use_two_images: bool = False,
         train_transform: Optional[Callable] = None,
@@ -145,11 +148,13 @@ class XrayDataModule(pl.LightningDataModule):
         self.dataset_dir = dataset_dir
         self.batch_size = batch_size
         self.num_workers = num_workers
+        self.percent_data = percent_data
 
         self.train_dataset = fetch_dataset(
             self.dataset_name,
             self.dataset_dir,
             "train",
+            self.percent_data,
             train_transform,
             label_list=label_list,
             two_image=use_two_images,
@@ -158,6 +163,7 @@ class XrayDataModule(pl.LightningDataModule):
             self.dataset_name,
             self.dataset_dir,
             "val",
+            self.percent_data,
             val_transform,
             label_list=label_list,
             two_image=use_two_images,
@@ -166,6 +172,7 @@ class XrayDataModule(pl.LightningDataModule):
             self.dataset_name,
             self.dataset_dir,
             "test",
+            self.percent_data,
             test_transform,
             label_list=label_list,
             two_image=use_two_images,
@@ -215,5 +222,6 @@ class XrayDataModule(pl.LightningDataModule):
         parser.add_argument("--dataset_dir", default=None, type=str)
         parser.add_argument("--batch_size", default=64, type=int)
         parser.add_argument("--num_workers", default=4, type=int)
+        parser.add_argument("--percent_data", default=1, type=float)
 
         return parser
