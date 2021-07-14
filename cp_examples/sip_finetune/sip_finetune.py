@@ -12,6 +12,10 @@ import requests
 import torch
 import torchvision.models as models
 from tqdm import tqdm
+import sys
+sys.path.insert(1, '../moco_pretrain')
+from moco_module import MoCoModule
+from pytorch_lightning import LightningModule
 
 
 def filter_nans(logits, labels):
@@ -58,7 +62,10 @@ def download_model(url, fname):
             progress_bar.update(len(chunk))
             fh.write(chunk)
 
-
+class MyLightningModule(LightningModule):
+       def __init__(self, learning_rate, *args, **kwargs):
+        super().__init__()
+        self.save_hyperparameters()
 class SipModule(pl.LightningModule):
     def __init__(
         self,

@@ -45,6 +45,7 @@ def build_args(arg_defaults=None):
     # ------------
     parser = ArgumentParser()
     parser.add_argument("--im_size", default=224, type=int)
+    parser.add_argument("--output_path", default="/gpfs/data/huo-lab/Image/rachnagupta/CovidPrognosis/cp_examples/moco_pretrain/pretrain.pt", type=str)
     parser = pl.Trainer.add_argparse_args(parser)
     parser = XrayDataModule.add_model_specific_args(parser)
     parser = MoCoModule.add_model_specific_args(parser)
@@ -132,6 +133,7 @@ def cli_main(args):
     # ------------
     trainer = pl.Trainer.from_argparse_args(args)
     trainer.fit(model, datamodule=data_module)
+    torch.save(model, args.output_path)
 
 
 if __name__ == "__main__":
