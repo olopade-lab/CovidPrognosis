@@ -89,6 +89,8 @@ class CheXpertDataset(BaseDataset):
                 "not returning samples".format(split, self.__class__.__name__)
             )
         downsized_num = (int)(len(self.csv.index)*percent_data)
+        print(downsized_num)
+        self.csv = self.csv.sample(frac=1)
         self.csv = self.csv.head(downsized_num)
         self.csv = self.preproc_csv(self.csv, self.subselect)
 

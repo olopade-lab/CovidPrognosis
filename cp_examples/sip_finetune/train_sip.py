@@ -166,6 +166,7 @@ def cli_main(args):
         dataset_name=args.dataset_name,
         dataset_dir=args.dataset_dir,
         batch_size=args.batch_size,
+        percent_data = args.percent_data,
         num_workers=args.num_workers,
         train_transform=Compose(train_transform_list),
         val_transform=Compose(val_transform_list),
